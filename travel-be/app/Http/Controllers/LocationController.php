@@ -51,29 +51,27 @@ class LocationController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Location $location
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Location $location)
-    {
-        //
-        $location = Location::find($location);
-
-        return $location;
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
      * @param  \App\Location $location
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Location $location)
+    public function update(User $user, Location $location)
     {
-        //
+        $this->validate(request(), [
+            'destination' => 'required',
+            'completed' => 'required'
+        ]);
+
+        return response();
+
+        //$location->destination = request('destination');
+        //$location->completed = request('completed');
+
+        //$location->save();
+
+        //return response();
     }
 
     /**

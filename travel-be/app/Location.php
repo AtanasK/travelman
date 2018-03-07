@@ -8,6 +8,7 @@ class Location extends Model
 {
     //
     protected $fillable = [
-        'destination'
+        'destination',
+        'completed'
     ];
 }

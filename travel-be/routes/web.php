@@ -17,21 +17,20 @@ Route::get('/', function () {
 
 
 //get all locations for user
-Route::get('/{user}/locations','LocationController@index');
+Route::get('/{user}/locations', 'LocationController@index');
 
 //get selected location info for user
-Route::get('/{user}/locations/{location}','LocationController@show');
+Route::get('/{user}/locations/{location}', 'LocationController@show');
 
 //add new location
 Route::post('/{user}/locations', 'LocationController@store');
 
-
 //edit location with id for user
-Route::put('/{user}/locations/{id}','LocationController@update');
+Route::put('/{user}/locations/{location}', 'LocationController@update');
 
 
 //delete location with id for user
-Route::delete('/{user}/locations/{id}','LocationController@destroy');
+Route::delete('/{user}/locations/{id}', 'LocationController@destroy');
 
 Auth::routes();
 
