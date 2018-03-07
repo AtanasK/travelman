@@ -31,4 +31,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Location::class);
     }
+
+
+    public function addLocation($destination)
+    {
+        $this->locations()->create(compact('destination'));
+    }
 }

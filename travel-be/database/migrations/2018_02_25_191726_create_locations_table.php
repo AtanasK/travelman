@@ -17,7 +17,7 @@ class CreateLocationsTable extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->string('destination');
-            $table->string('current_location');
+            $table->integer('completed')->default(0);
             $table->integer('user_id');
 
         });
