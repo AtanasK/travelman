@@ -26,15 +26,11 @@ Route::get('/{user}/locations/{location}', 'LocationController@show');
 Route::post('/{user}/locations', 'LocationController@store');
 
 //edit location with id for user
-//Route::put('/{user}/locations/{id}', function (\App\User $user, \App\Location $id){
-//    dd([$user, $id]);
-//});
-
 Route::put('/{user}/locations/{location}', 'LocationController@update');
 
 
 //delete location with id for user
-Route::delete('/{user}/locations/{id}', 'LocationController@destroy');
+Route::delete('/{user}/locations/{location}', 'LocationController@destroy');
 
 Auth::routes();
 
