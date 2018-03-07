@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Location;
 use App\User;
 use Illuminate\Http\Request;
+use \Validator;
 
 
 class LocationController extends Controller
@@ -41,13 +42,17 @@ class LocationController extends Controller
      */
     public function store(Request $request, User $user)
     {
-
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'destination' => 'required|string|min:2|max:50',
         ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
         $user->addLocation($request->json('destination'));
 
-        return response()->json(['status' => 200]);
+        return response()->json(['status' => "success"], 200);
     }
 
     /**
