@@ -43,11 +43,11 @@ class LocationController extends Controller
     {
 
         $this->validate($request, [
-            'destination' => 'required',
+            'destination' => 'required|string|min:2|max:50',
         ]);
-        $user->addLocation(request('destination'));
+        $user->addLocation($request->json('destination'));
 
-        return response();
+        return response()->json(['status' => 200]);
     }
 
     /**
@@ -57,21 +57,20 @@ class LocationController extends Controller
      * @param  \App\Location $location
      * @return \Illuminate\Http\Response
      */
-    public function update(User $user, Location $location)
+    public function update(Request $request, User $user, Location $location)
     {
-        $this->validate(request(), [
-            'destination' => 'required',
-            'completed' => 'required'
+
+        $this->validate($request, [
+            'destination' => 'required|string|min:2|max:50',
+            'completed' => 'required|boolean'
         ]);
 
-        return response();
+        $location->destination = $request->json('destination');
+        $location->completed = $request->json('completed');
 
-        //$location->destination = request('destination');
-        //$location->completed = request('completed');
+        $location->save();
 
-        //$location->save();
-
-        //return response();
+        return response()->json(['status' => 200]);
     }
 
     /**

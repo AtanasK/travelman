@@ -26,6 +26,10 @@ Route::get('/{user}/locations/{location}', 'LocationController@show');
 Route::post('/{user}/locations', 'LocationController@store');
 
 //edit location with id for user
+//Route::put('/{user}/locations/{id}', function (\App\User $user, \App\Location $id){
+//    dd([$user, $id]);
+//});
+
 Route::put('/{user}/locations/{location}', 'LocationController@update');
 
 
