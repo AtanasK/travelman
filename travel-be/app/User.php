@@ -38,9 +38,4 @@ class User extends Authenticatable
         $this->locations()->create(compact('destination'));
     }
 
-
-
-    public function deleteLocation($location){
-
-    }
 }
