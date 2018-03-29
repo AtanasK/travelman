@@ -26,12 +26,13 @@ class LocationController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param \App\User $user
      * @param  \App\Location $location
      * @return \Illuminate\Http\Response
      */
     public function show(User $user, Location $location)
     {
-        return $location;
+        return response()->json($location, 200);
     }
 
     /**
@@ -86,6 +87,13 @@ class LocationController extends Controller
      */
     public function destroy(Location $location)
     {
-        //
+        $success = false;
+        try {
+            $success = $location->delete();
+            $status = $success ? 'success' : 'failed';
+        } catch (\Exception $e) {
+            $status = $e->getMessage();
+        }
+        return response()->json(['status' => $status], $success ? 200 : 400);
     }
 }
