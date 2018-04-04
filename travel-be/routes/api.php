@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,9 +28,11 @@ Route::group([
 
 });
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/user', 'UserController@index')->middleware('auth:api');
+
+Route::put('/user', 'UserController@update')->middleware('auth:api');
+
+Route::post('/user', 'UserController@create');
 
 //get all locations for user
 Route::get('/{user}/locations', 'LocationController@index');
@@ -45,4 +48,3 @@ Route::put('/{user}/locations/{location}', 'LocationController@update');
 
 //delete location with id for user
 Route::delete('/{user}/locations/{location}', 'LocationController@destroy');
-
