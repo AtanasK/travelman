@@ -30,8 +30,15 @@ class UserController extends Controller
             'password' => bcrypt($request->json('password')),
         ]);
 
+        $credentials = request(['email', 'password']);
+        $token = auth()->attempt($credentials);
+
         if ($success) {
-            return response()->json(['success' => true], 201);
+            return response()->json([
+                'success' => true,
+                'token' => $token,
+                'expires_in' => auth()->factory()->getTTL() * 60
+            ], 201);
         }
 
         return response()->json(['success' => false], 500);
