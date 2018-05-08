@@ -16,7 +16,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'first_name','last_name', 'email', 'password',
     ];
 
     /**
@@ -34,9 +34,9 @@ class User extends Authenticatable implements JWTSubject
     }
 
 
-    public function addLocation($destination)
+    public function addLocation($lat, $lng, $completed = 0)
     {
-        $this->locations()->create(compact('destination'));
+        $this->locations()->create(compact(['lat', 'lng', 'completed']));
     }
 
     /**

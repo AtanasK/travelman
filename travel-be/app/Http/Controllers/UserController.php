@@ -25,7 +25,8 @@ class UserController extends Controller
     public function create(Request $request)
     {
         $success = User::create([
-            'name' => $request->json('name'),
+            'first_name' => $request->json('firstName'),
+            'last_name' => $request->json('lastName'),
             'email' => $request->json('email'),
             'password' => bcrypt($request->json('password')),
         ]);
