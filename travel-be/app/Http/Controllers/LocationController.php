@@ -45,7 +45,8 @@ class LocationController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'lat' => 'required|string',
-            'lng' => 'required|string'
+            'lng' => 'required|string',
+            'address' => 'required|string'
         ]);
 
         if ($validator->fails()) {
@@ -53,6 +54,7 @@ class LocationController extends Controller
         }
 
         $user->addLocation(
+            $request->json('address'),
             $request->json('lat'),
             $request->json('lng'),
             $request->json('completed', 0)
@@ -71,6 +73,7 @@ class LocationController extends Controller
     public function update(Request $request, User $user, Location $location)
     {
         $validator = Validator::make($request->all(), [
+            'address' => 'required|string',
             'lat' => 'required|string',
             'lng' => 'required|string',
             'completed' => 'required|boolean'
@@ -80,6 +83,7 @@ class LocationController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
+        $location->address = $request->json('address');
         $location->lat = $request->json('lat');
         $location->lng = $request->json('lng');
         $location->completed = $request->json('completed');
