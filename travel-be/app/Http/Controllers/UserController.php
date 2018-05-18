@@ -16,7 +16,9 @@ class UserController extends Controller
     public function update(Request $request)
     {
         $user = $request->user();
-        $user->name = $request->json('name');
+        $user->first_name = $request->json('first_name');
+        $user->last_name = $request->json('last_name');
+        $user->email = $request->json('email');
         if ($user->save())
             return response()->json(['success' => true], 200);
         return response()->json(['success' => false], 500);
