@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 
 class UserController extends Controller
@@ -16,9 +17,19 @@ class UserController extends Controller
     public function update(Request $request)
     {
         $user = $request->user();
-        $user->first_name = $request->json('first_name');
-        $user->last_name = $request->json('last_name');
-        $user->email = $request->json('email');
+
+        if ($request->json('change') == 1) {
+            if (Hash::check($request->json('old_password'), $user->password)) {
+                $user->password = bcrypt($request->json('new_password'));
+            } else {
+                return response()->json(['status' => 'wrong pass'], 500);
+            }
+        } else {
+            $user->first_name = $request->json('first_name');
+            $user->last_name = $request->json('last_name');
+            $user->email = $request->json('email');
+        }
+
         if ($user->save())
             return response()->json(['success' => true], 200);
         return response()->json(['success' => false], 500);
