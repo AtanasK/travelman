@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ContactMail;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 
 class UserController extends Controller
@@ -37,7 +39,7 @@ class UserController extends Controller
 
     public function create(Request $request)
     {
-        $success = User::create([
+        $newUser = User::create([
             'first_name' => $request->json('firstName'),
             'last_name' => $request->json('lastName'),
             'email' => $request->json('email'),
@@ -47,7 +49,16 @@ class UserController extends Controller
         $credentials = request(['email', 'password']);
         $token = auth()->attempt($credentials);
 
-        if ($success) {
+        if ($newUser) {
+
+            $data = [
+                'subject' => "Thanks for joining travelman, {$newUser->first_name}",
+                'heading' => "Welcome, and thanks for joining us!",
+                'message' => "Hello <strong>{$newUser->first_name}</strong>!<br>Thanks for joining travelman. Enjoy your stay!",
+            ];
+            Mail::to($newUser->email)->send(new ContactMail($data));
+
+
             return response()->json([
                 'success' => true,
                 'access_token' => $token,
