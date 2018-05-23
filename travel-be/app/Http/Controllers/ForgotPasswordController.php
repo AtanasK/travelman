@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\ForgotPassword;
+use App\Mail\ContactMail;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ForgotPasswordController extends Controller
 {
@@ -16,11 +18,10 @@ class ForgotPasswordController extends Controller
             $user = User::where('email', $email);
 
             if ($user->count()) {
+                $user = $user->first();
                 $token = md5(uniqid()) . md5(uniqid());
 
-                $saveToken = new ForgotPassword();
-                $saveToken->token = $token;
-                $user->resetPasswordRequests()->save($saveToken);
+                $user->resetPasswordRequests()->create(['token' => $token]);
 
                 $data = [
                     'subject' => "Reset password for your account {$user->first_name}",
@@ -60,7 +61,7 @@ class ForgotPasswordController extends Controller
         if ($id && $token) {
             $resetUser = User::find($id);
             if ($resetUser->count()) {
-                $resetUser = $resetUser->get();
+                $resetUser = $resetUser->first();
 
                 $resetRequest = $resetUser->resetPasswordRequests()->where('token', $token);
 
@@ -80,7 +81,7 @@ class ForgotPasswordController extends Controller
         }
     }
 
-    public function new(Request $request)
+    public function newPassword(Request $request)
     {
         $id = $request->json('id');
         $token = $request->json('token');
@@ -89,7 +90,7 @@ class ForgotPasswordController extends Controller
         if ($id && $token && $password) {
             $resetUser = User::find($id);
             if ($resetUser->count()) {
-                $resetUser = $resetUser->get();
+                $resetUser = $resetUser->first();
 
                 $resetRequest = $resetUser->resetPasswordRequests()->where('token', $token);
 

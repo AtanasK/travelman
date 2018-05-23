@@ -181,7 +181,7 @@
                                         <table border="0" cellspacing="0" cellpadding="0">
                                             <tr>
                                                 <td align="center" style="border-radius: 3px;" bgcolor="#33cabb"><a
-                                                            href="http://localhost/forgot/{{ $data['reset']['id'] }}/{{ $data['reset']['token'] }}"
+                                                            href="http://localhost:8080/#/forgot/{{ $data['reset']['id'] }}/{{ $data['reset']['token'] }}"
                                                             target="_blank"
                                                             style="font-size: 18px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 12px 50px; border-radius: 2px; border: 1px solid #33cabb; display: inline-block;">Reset
                                                         Password</a></td>
