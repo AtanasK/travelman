@@ -172,6 +172,27 @@
                     </td>
                 </tr>
                 <!-- COPY -->
+                @if (isset($data['reset']))
+                    <tr>
+                        <td bgcolor="#ffffff" align="left">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td bgcolor="#ffffff" align="center" style="padding: 20px 30px 30px 30px;">
+                                        <table border="0" cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                <td align="center" style="border-radius: 3px;" bgcolor="#33cabb"><a
+                                                            href="http://localhost/forgot/{{ $data['reset']['id'] }}/{{ $data['reset']['token'] }}"
+                                                            target="_blank"
+                                                            style="font-size: 18px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 12px 50px; border-radius: 2px; border: 1px solid #33cabb; display: inline-block;">Reset
+                                                        Password</a></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                @endif
                 <tr>
                     <td bgcolor="#ffffff" align="left"
                         style="padding: 0px 30px 40px 30px; border-radius: 0px 0px 4px 4px; color: #666666; font-family: &apos;Lato&apos;, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 400; line-height: 25px;">

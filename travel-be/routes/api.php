@@ -28,6 +28,10 @@ Route::group([
 
 });
 
+Route::post('/forgotpassword', 'ForgotPasswordController@forgot');
+Route::post('/forgotpassword/check', 'ForgotPasswordController@check');
+Route::post('/forgotpassword/new', 'ForgotPasswodController@newPassword');
+
 Route::get('/user', 'UserController@index')->middleware('auth:api');
 
 Route::put('/user', 'UserController@update')->middleware('auth:api');

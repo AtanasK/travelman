@@ -39,6 +39,11 @@ class User extends Authenticatable implements JWTSubject
         $this->locations()->create(compact(['address', 'lat', 'lng', 'completed']));
     }
 
+    public function resetPasswordRequests()
+    {
+        return $this->hasMany(ForgotPassword::class);
+    }
+
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
