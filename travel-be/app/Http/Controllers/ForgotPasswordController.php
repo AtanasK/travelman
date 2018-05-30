@@ -8,8 +8,22 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
+/**
+ * Class ForgotPasswordController
+ *
+ * Class for resetting the password
+ *
+ * @package App\Http\Controllers
+ */
 class ForgotPasswordController extends Controller
 {
+    /**
+     * Send a mail to the given email with a link for password reset.
+     * The link contains the user's id and a token for validation in its url.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function forgot(Request $request)
     {
         $email = $request->json('email');
@@ -53,6 +67,12 @@ class ForgotPasswordController extends Controller
         }
     }
 
+    /**
+     * Check if the tokens match for the specific user.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function check(Request $request)
     {
         $id = $request->json('id');
@@ -81,6 +101,12 @@ class ForgotPasswordController extends Controller
         }
     }
 
+    /**
+     * Update the specified user's password in storage.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function newPassword(Request $request)
     {
         $id = $request->json('id');

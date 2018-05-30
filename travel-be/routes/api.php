@@ -28,15 +28,35 @@ Route::group([
 
 });
 
+/**
+ * Routes for resetting password.
+ */
+
+//send email to received mail address for password reset
 Route::post('/forgotpassword', 'ForgotPasswordController@forgot');
+
+//check received token and id
 Route::post('/forgotpassword/check', 'ForgotPasswordController@check');
+
+//reset password for user
 Route::post('/forgotpassword/new', 'ForgotPasswordController@newPassword');
 
+/**
+ * Routes for user CRUD.
+ */
+
+//get specific user
 Route::get('/user', 'UserController@index')->middleware('auth:api');
 
+//update user
 Route::put('/user', 'UserController@update')->middleware('auth:api');
 
+//register user
 Route::post('/user', 'UserController@create');
+
+/**
+ * Routes for location CRUD.
+ */
 
 //get all locations for user
 Route::get('/{user}/locations', 'LocationController@index');

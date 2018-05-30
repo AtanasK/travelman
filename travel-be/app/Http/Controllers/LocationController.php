@@ -7,11 +7,18 @@ use App\User;
 use Illuminate\Http\Request;
 use \Validator;
 
-
+/**
+ * Class LocationController
+ *
+ * Class for CRUD operations for locations.
+ *
+ * @package App\Http\Controllers
+ */
 class LocationController extends Controller
 {
     /**
-     * Function for X
+     * Retrieve locations for specified user
+     *
      * @param User $user
      * @return array of locations
      */
@@ -24,7 +31,7 @@ class LocationController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified location.
      *
      * @param \App\User $user
      * @param  \App\Location $location
@@ -36,9 +43,10 @@ class LocationController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created location in storage.
      *
      * @param  \Illuminate\Http\Request $request
+     * @param \App\User $user
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, User $user)
@@ -64,9 +72,10 @@ class LocationController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified location in storage.
      *
      * @param  \Illuminate\Http\Request $request
+     * @param \App\User $user
      * @param  \App\Location $location
      * @return \Illuminate\Http\Response
      */
@@ -94,7 +103,7 @@ class LocationController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified location from storage.
      *
      * @param \App\User $user
      * @param  \App\Location $location

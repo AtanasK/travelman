@@ -28,17 +28,32 @@ class User extends Authenticatable implements JWTSubject
         'password', 'remember_token',
     ];
 
+    /**
+     * Define one to many relationship with App\Location .
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function locations()
     {
         return $this->hasMany(Location::class);
     }
 
-
+    /**
+     * Add a location for user.
+     *
+     * @param $address
+     * @param $lat
+     * @param $lng
+     * @param int $completed
+     */
     public function addLocation($address, $lat, $lng, $completed = 0)
     {
         $this->locations()->create(compact(['address', 'lat', 'lng', 'completed']));
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function resetPasswordRequests()
     {
         return $this->hasMany(ForgotPassword::class);

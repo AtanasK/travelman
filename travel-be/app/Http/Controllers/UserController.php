@@ -8,14 +8,32 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
-
+/**
+ * Class UserController
+ *
+ * Class for CRUD operations for users.
+ *
+ * @package App\Http\Controllers
+ */
 class UserController extends Controller
 {
+    /**
+     * Retrieve user with specified index
+     *
+     * @param Request $request
+     * @return \App\User
+     */
     public function index(Request $request)
     {
         return $request->user();
     }
 
+    /**
+     * Update the specified user in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function update(Request $request)
     {
         $user = $request->user();
@@ -37,6 +55,12 @@ class UserController extends Controller
         return response()->json(['success' => false], 500);
     }
 
+    /**
+     * Store a newly created user in storage and send mail for successful registration.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function create(Request $request)
     {
         $newUser = User::create([
