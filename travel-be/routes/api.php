@@ -73,6 +73,9 @@ Route::put('/{user}/locations/{location}', 'LocationController@update');
 //delete location with id for user
 Route::delete('/{user}/locations/{location}', 'LocationController@destroy');
 
+Route::get('/{user}/locations/visited/count', 'LocationController@visitedCount');
+Route::get('/{user}/locations/planned/count', 'LocationController@plannedCount');
+
 
 /**
  * Routes for picture CRUD

@@ -120,4 +120,18 @@ class LocationController extends Controller
             return response()->json(['status' => $exception->getMessage()], 500);
         }
     }
+
+    public function visitedCount(User $user)
+    {
+        return response()->json([
+            'count' => $user->locations()->where('completed', '1')->count()
+        ]);
+    }
+
+    public function plannedCount(User $user)
+    {
+        return response()->json([
+            'count' => $user->locations()->where('completed', '0')->count()
+        ]);
+    }
 }
