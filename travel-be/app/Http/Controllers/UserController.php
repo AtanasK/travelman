@@ -92,4 +92,9 @@ class UserController extends Controller
 
         return response()->json(['success' => false], 500);
     }
+
+    public function delete(Request $request)
+    {
+        \auth()->user();
+    }
 }
