@@ -72,3 +72,11 @@ Route::put('/{user}/locations/{location}', 'LocationController@update');
 
 //delete location with id for user
 Route::delete('/{user}/locations/{location}', 'LocationController@destroy');
+
+
+/**
+ * Routes for picture CRUD
+ */
+
+Route::post('/{user}/avatar', 'AvatarController@store');
+Route::get('/{user}/avatar', 'AvatarController@show');
