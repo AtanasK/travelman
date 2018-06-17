@@ -50,8 +50,11 @@ class AvatarController extends Controller
     public function show(Request $request, User $user)
     {
         $avatar = $user->avatar()->latest()->first();
-        if ($avatar)
+        if ($avatar) {
             $contents = Storage::get($avatar->path);
+        } else {
+            $contents = Storage::get('public/default/1.png');
+        }
 
         return response()->make($contents, 200, [
             'Content-Type' => (new \finfo(FILEINFO_MIME))->buffer($contents)
