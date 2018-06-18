@@ -82,4 +82,4 @@ Route::get('/{user}/locations/planned/count', 'LocationController@plannedCount')
  */
 
 Route::post('/{user}/avatar', 'AvatarController@store')->middleware('auth:api');
-Route::get('/{user}/avatar', 'AvatarController@show')->middleware('auth:api');
+Route::get('/{user}/avatar', 'AvatarController@show');
