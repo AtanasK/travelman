@@ -42,7 +42,8 @@ class UserController extends Controller
         if ($request->json('change') == 1) {
             $validator = Validator::make($request->all(), [
                 'password' => 'required|string|confirmed',
-                'password_confirmation' => 'required'
+                'password_confirmation' => 'required',
+                'old_password' => 'required'
             ]);
 
             if ($validator->fails()) {
@@ -50,7 +51,7 @@ class UserController extends Controller
             }
 
             if (Hash::check($request->json('old_password'), $user->password)) {
-                $user->password = bcrypt($request->json('new_password'));
+                $user->password = bcrypt($request->json('password'));
             } else {
                 return response()->json(['status' => 'wrong pass'], 500);
             }
