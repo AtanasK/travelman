@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use \Validator;
 
 /**
  * Class UserController
@@ -39,12 +40,31 @@ class UserController extends Controller
         $user = $request->user();
 
         if ($request->json('change') == 1) {
+            $validator = Validator::make($request->all(), [
+                'password' => 'required|string|confirmed',
+                'password_confirmation' => 'required'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json($validator->errors(), 400);
+            }
+
             if (Hash::check($request->json('old_password'), $user->password)) {
                 $user->password = bcrypt($request->json('new_password'));
             } else {
                 return response()->json(['status' => 'wrong pass'], 500);
             }
         } else {
+            $validator = Validator::make($request->all(), [
+                'first_name' => 'required|string|min:2|max:250',
+                'last_name' => 'required|string|min:2|max:250',
+                'email' => 'required|string|min:2|max:250|email'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json($validator->errors(), 400);
+            }
+
             $user->first_name = $request->json('first_name');
             $user->last_name = $request->json('last_name');
             $user->email = $request->json('email');
@@ -63,6 +83,18 @@ class UserController extends Controller
      */
     public function create(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'firstName' => 'required|string|min:2|max:250',
+            'lastName' => 'required|string|min:2|max:250',
+            'email' => 'required|string|min:2|max:250|email',
+            'password' => 'required|string|confirmed',
+            'password_confirmation' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
         $newUser = User::create([
             'first_name' => $request->json('firstName'),
             'last_name' => $request->json('lastName'),
@@ -70,19 +102,24 @@ class UserController extends Controller
             'password' => bcrypt($request->json('password')),
         ]);
 
+        // get token to provide it for auto-login after sign-up
         $credentials = request(['email', 'password']);
         $token = auth()->attempt($credentials);
 
+        // if creation is successful
         if ($newUser) {
 
+            // prepare mail data
             $data = [
                 'subject' => "Thanks for joining travelman, {$newUser->first_name}",
                 'heading' => "Welcome, and thanks for joining us!",
                 'message' => "Hello <strong>{$newUser->first_name}</strong>!<br>Thanks for joining travelman. Enjoy your stay!",
             ];
+            // send mail
             Mail::to($newUser->email)->send(new ContactMail($data));
 
 
+            // return success message
             return response()->json([
                 'success' => true,
                 'access_token' => $token,
