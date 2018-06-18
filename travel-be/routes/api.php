@@ -59,19 +59,19 @@ Route::post('/user', 'UserController@create');
  */
 
 //get all locations for user
-Route::get('/{user}/locations', 'LocationController@index');
+Route::get('/{user}/locations', 'LocationController@index')->middleware('auth:api');
 
 //get selected location info for user
-Route::get('/{user}/locations/{location}', 'LocationController@show');
+Route::get('/{user}/locations/{location}', 'LocationController@show')->middleware('auth:api');
 
 //add new location
-Route::post('/{user}/locations', 'LocationController@store');
+Route::post('/{user}/locations', 'LocationController@store')->middleware('auth:api');
 
 //edit location with id for user
-Route::put('/{user}/locations/{location}', 'LocationController@update');
+Route::put('/{user}/locations/{location}', 'LocationController@update')->middleware('auth:api');
 
 //delete location with id for user
-Route::delete('/{user}/locations/{location}', 'LocationController@destroy');
+Route::delete('/{user}/locations/{location}', 'LocationController@destroy')->middleware('auth:api');
 
 Route::get('/{user}/locations/visited/count', 'LocationController@visitedCount');
 Route::get('/{user}/locations/planned/count', 'LocationController@plannedCount');
@@ -81,5 +81,5 @@ Route::get('/{user}/locations/planned/count', 'LocationController@plannedCount')
  * Routes for picture CRUD
  */
 
-Route::post('/{user}/avatar', 'AvatarController@store');
-Route::get('/{user}/avatar', 'AvatarController@show');
+Route::post('/{user}/avatar', 'AvatarController@store')->middleware('auth:api');
+Route::get('/{user}/avatar', 'AvatarController@show')->middleware('auth:api');
